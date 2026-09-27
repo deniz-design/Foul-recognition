@@ -1,0 +1,30 @@
+# Minimal dependencies required to SERVE the inference API.
+#
+# The original requirements.txt pins torch==2.2.2 / numpy==1.26.4, which have no
+# wheels for Python 3.13+ and also pulls in training-only packages (SoccerNet,
+# scikit-video, pycocotools) that need a compiler, Java or a network dataset on
+# Windows. None of that is needed to answer POST /api/inference.
+#
+# Use this file to run the API. Use requirements.txt (Python 3.11) to train.
+
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.34,<1.0
+python-multipart>=0.0.20
+pydantic>=2.11,<3.0
+
+# Supports Python 3.14.
+torch>=2.9
+torchvision>=0.24
+numpy>=2.0
+
+# Pinned below 5.0: the project is written against the OpenCV 4.x API and 5.x
+# drops several of the legacy constants it relies on.
+opencv-python-headless>=4.11,<5
+pillow>=11.1
+h5py>=3.12
+
+# Only used to enrich the referee decision with a natural-language explanation.
+# The API falls back to a rule-based explanation when unset.
+openai>=1.78
+
+python-dotenv>=1.0
